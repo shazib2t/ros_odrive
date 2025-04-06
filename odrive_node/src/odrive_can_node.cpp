@@ -96,14 +96,14 @@ void ODriveCanNode::recv_callback(const can_frame& frame) {
             fresh_heartbeat_.notify_one();
             break;
         }
-        case CmdId::kGetError: {
-            if (!verify_length("kGetError", 8, frame.can_dlc)) break;
-            std::lock_guard<std::mutex> guard(odrv_stat_mutex_);
-            odrv_stat_.active_errors = read_le<uint32_t>(frame.data + 0);
-            odrv_stat_.disarm_reason = read_le<uint32_t>(frame.data + 4);
-            odrv_pub_flag_ |= 0b001;
-            break;
-        }
+        // case CmdId::kGetError: {
+        //     if (!verify_length("kGetError", 8, frame.can_dlc)) break;
+        //     std::lock_guard<std::mutex> guard(odrv_stat_mutex_);
+        //     odrv_stat_.active_errors = read_le<uint32_t>(frame.data + 0);
+        //     odrv_stat_.disarm_reason = read_le<uint32_t>(frame.data + 4);
+        //     odrv_pub_flag_ |= 0b001;
+        //     break;
+        // }
         case CmdId::kGetEncoderEstimates: {
             if (!verify_length("kGetEncoderEstimates", 8, frame.can_dlc)) break;
             std::lock_guard<std::mutex> guard(ctrl_stat_mutex_);
@@ -112,45 +112,45 @@ void ODriveCanNode::recv_callback(const can_frame& frame) {
             ctrl_pub_flag_ |= 0b0010;
             break;
         }
-        case CmdId::kGetIq: {
-            if (!verify_length("kGetIq", 8, frame.can_dlc)) break;
-            std::lock_guard<std::mutex> guard(ctrl_stat_mutex_);
-            ctrl_stat_.iq_setpoint = read_le<float>(frame.data + 0);
-            ctrl_stat_.iq_measured = read_le<float>(frame.data + 4);
-            ctrl_pub_flag_ |= 0b0100;
-            break;
-        }
-        case CmdId::kGetTemp: {
-            if (!verify_length("kGetTemp", 8, frame.can_dlc)) break;
-            std::lock_guard<std::mutex> guard(odrv_stat_mutex_);
-            odrv_stat_.fet_temperature   = read_le<float>(frame.data + 0);
-            odrv_stat_.motor_temperature = read_le<float>(frame.data + 4);
-            odrv_pub_flag_ |= 0b010;
-            break;
-        }
-        case CmdId::kGetBusVoltageCurrent: {
-            if (!verify_length("kGetBusVoltageCurrent", 8, frame.can_dlc)) break;
-            std::lock_guard<std::mutex> guard(odrv_stat_mutex_);
-            odrv_stat_.bus_voltage = read_le<float>(frame.data + 0);
-            odrv_stat_.bus_current = read_le<float>(frame.data + 4);
-            odrv_pub_flag_ |= 0b100;
-            break;
-        }
-        case CmdId::kGetTorques: {
-            if (!verify_length("kGetTorques", 8, frame.can_dlc)) break;
-            std::lock_guard<std::mutex> guard(ctrl_stat_mutex_);
-            ctrl_stat_.torque_target   = read_le<float>(frame.data + 0);
-            ctrl_stat_.torque_estimate = read_le<float>(frame.data + 4);
-            ctrl_pub_flag_ |= 0b1000; 
-            break;
-        }
+        // case CmdId::kGetIq: {
+        //     if (!verify_length("kGetIq", 8, frame.can_dlc)) break;
+        //     std::lock_guard<std::mutex> guard(ctrl_stat_mutex_);
+        //     ctrl_stat_.iq_setpoint = read_le<float>(frame.data + 0);
+        //     ctrl_stat_.iq_measured = read_le<float>(frame.data + 4);
+        //     ctrl_pub_flag_ |= 0b0100;
+        //     break;
+        // }
+        // case CmdId::kGetTemp: {
+        //     if (!verify_length("kGetTemp", 8, frame.can_dlc)) break;
+        //     std::lock_guard<std::mutex> guard(odrv_stat_mutex_);
+        //     odrv_stat_.fet_temperature   = read_le<float>(frame.data + 0);
+        //     odrv_stat_.motor_temperature = read_le<float>(frame.data + 4);
+        //     odrv_pub_flag_ |= 0b010;
+        //     break;
+        // }
+        // case CmdId::kGetBusVoltageCurrent: {
+        //     if (!verify_length("kGetBusVoltageCurrent", 8, frame.can_dlc)) break;
+        //     std::lock_guard<std::mutex> guard(odrv_stat_mutex_);
+        //     odrv_stat_.bus_voltage = read_le<float>(frame.data + 0);
+        //     odrv_stat_.bus_current = read_le<float>(frame.data + 4);
+        //     odrv_pub_flag_ |= 0b100;
+        //     break;
+        // }
+        // case CmdId::kGetTorques: {
+        //     if (!verify_length("kGetTorques", 8, frame.can_dlc)) break;
+        //     std::lock_guard<std::mutex> guard(ctrl_stat_mutex_);
+        //     ctrl_stat_.torque_target   = read_le<float>(frame.data + 0);
+        //     ctrl_stat_.torque_estimate = read_le<float>(frame.data + 4);
+        //     ctrl_pub_flag_ |= 0b1000; 
+        //     break;
+        // }
         default: {
             RCLCPP_WARN(rclcpp::Node::get_logger(), "Received unused message: ID = 0x%x", (frame.can_id & 0x1F));
             break;
         }
     }
     
-    if (ctrl_pub_flag_ == 0b1111) {
+    if (ctrl_pub_flag_ == 0b11) {
         ctrl_publisher_->publish(ctrl_stat_);
         ctrl_pub_flag_ = 0;
     }
