@@ -24,7 +24,7 @@ For information about installation, prerequisites and getting started, check out
 
 ### Publishes
 
-* `/odrive_status`: Provides ODrive/system level status updates.
+* (NOTE: Does not work yet) `/odrive_status`: Provides ODrive/system level status updates.
 
   For this topic to work, the ODrive must be configured with the following [cyclic messages](https://docs.odriverobotics.com/v/latest/manual/can-protocol.html#cyclic-messages) enabled:
 
@@ -34,14 +34,13 @@ For information about installation, prerequisites and getting started, check out
 
   The ROS node will wait until one of each of these CAN messages has arrived before it emits a message on the `odrive_status` topic. Therefore, the largest period set here will dictate the period of the ROS2 message as well.
 
-* `/controller_status`: Provides Controller level status updates. 
+* (Does work)`/controller_status`: Provides Controller level status updates. 
 
   For this topic to work, the ODrive must be configured with the following [cyclic messages](https://docs.odriverobotics.com/v/latest/manual/can-protocol.html#cyclic-messages) enabled:
 
   - `heartbeat_msg_rate_ms`
   - `encoder_msg_rate_ms`
-  - `iq_msg_rate_ms`
-  - `torques_msg_rate_ms`
+
 
   The ROS node will wait until one of each of these CAN messages has arrived before it emits a message on the `controller_status` topic. Therefore, the largest period set here will dictate the period of the ROS2 message as well.
 

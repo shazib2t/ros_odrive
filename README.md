@@ -1,4 +1,4 @@
-# ROS2 Package for ODrive
+# ROS2 Package for ODrive based on V3.6
 
 This repository contains ROS2 packages for the [ODrive motor controller](https://odriverobotics.com):
 
@@ -17,7 +17,9 @@ For information about installation, prerequisites and getting started, check out
 - [ODrive S1](https://shop.odriverobotics.com/products/odrive-s1)
 - [ODrive Micro](https://shop.odriverobotics.com/products/odrive-micro)
 
-(not compatible with ODrive 3.x)
+
+### *** This version is compatible with hw V3.6 such as Makerbase ODrive Mini 
+- [ODrive based on v3.6](https://makerbase3d.com/product/makerbase-xdrive-mini-high-precision-brushless-servo-motor-controller-based-on-odrive3-6-with-as5047p-on-board/?srsltid=AfmBOoqylqYM21WR1u-SFcprBAYoIpf_EgLq3mZdKARryWxgIwfI8lcZ)
 
 ## System Requirements
 
