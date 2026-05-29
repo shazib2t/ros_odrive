@@ -44,10 +44,16 @@ ODriveCanNode::ODriveCanNode(const std::string& node_name) : rclcpp::Node(node_n
     subscriber_ = rclcpp::Node::create_subscription<ControlMessage>("control_message", ctrl_msg_qos, std::bind(&ODriveCanNode::subscriber_callback, this, _1));
 
     rclcpp::QoS srv_qos(rclcpp::KeepAll{});
-    service_ = rclcpp::Node::create_service<AxisState>("request_axis_state", std::bind(&ODriveCanNode::service_callback, this, _1, _2), srv_qos.get_rmw_qos_profile());
+service_ = this->create_service<AxisState>(
+    "request_axis_state",
+    std::bind(&ODriveCanNode::service_callback, this, _1, _2),
+    srv_qos);
 
-    rclcpp::QoS srv_clear_errors_qos(rclcpp::KeepAll{});
-    service_clear_errors_ = rclcpp::Node::create_service<Empty>("clear_errors", std::bind(&ODriveCanNode::service_clear_errors_callback, this, _1, _2), srv_clear_errors_qos.get_rmw_qos_profile());
+rclcpp::QoS srv_clear_errors_qos(rclcpp::KeepAll{});
+service_clear_errors_ = this->create_service<Empty>(
+    "clear_errors",
+    std::bind(&ODriveCanNode::service_clear_errors_callback, this, _1, _2),
+    srv_clear_errors_qos);
 }
 
 void ODriveCanNode::deinit() {

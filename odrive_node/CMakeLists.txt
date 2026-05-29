@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.10...3.11)
 project(odrive_can)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -6,7 +6,7 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 # find dependencies
-find_package(ament_cmake REQUIRED)
+find_package(ament_cmake_ros REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 find_package(std_srvs REQUIRED)
@@ -29,10 +29,13 @@ add_executable(odrive_can_node
   src/main.cpp
   include/odrive_can_node.hpp)
 
-ament_target_dependencies(odrive_can_node
-  rclcpp
-  std_srvs
-)
+#ament_target_dependencies(odrive_can_node
+#  rclcpp
+#  std_srvs
+#)
+
+
+
 
 target_compile_features(odrive_can_node PRIVATE cxx_std_20)
 
@@ -48,6 +51,6 @@ install(DIRECTORY launch
 rosidl_get_typesupport_target(cpp_typesupport_target
   ${PROJECT_NAME} rosidl_typesupport_cpp)
 
-target_link_libraries(odrive_can_node "${cpp_typesupport_target}")
+target_link_libraries(odrive_can_node "${cpp_typesupport_target}" ament_cmake_ros_core::ament_ros_defaults rclcpp::rclcpp std_srvs::std_srvs)
 
 ament_package()
