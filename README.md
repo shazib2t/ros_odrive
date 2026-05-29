@@ -1,4 +1,4 @@
-# ROS2 Package for ODrive based on V3.6
+# ROS2 Package for ODrive based on V3.6 For ROS2 Lyrical Luth with Ubuntu 26.04
 
 This repository contains ROS2 packages for the [ODrive motor controller](https://odriverobotics.com):
 
@@ -23,8 +23,8 @@ For information about installation, prerequisites and getting started, check out
 
 ## System Requirements
 
-- Ubuntu >= 20.04
-- ROS2 >= Humble
+- Ubuntu >= 26.04
+- ROS2 >= Lyrical
 
 ## Developer Notes
 

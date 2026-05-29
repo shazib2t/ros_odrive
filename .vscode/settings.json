@@ -64,4 +64,6 @@
         "/snap/bin",
         "/home/manzur2/.platformio/penv/bin"
     ],
+    "ROS2.distro": "lyrical",
+    "cmake.sourceDirectory": "/home/manzur/ros2_ws_new/src/ros_odrive/odrive_botwheel_explorer",
 }
